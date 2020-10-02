@@ -30,18 +30,21 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import { api } from '@/api'
+import { NavigationGuardNext, Route } from 'vue-router'
 
-@Component
+@Component({
+  beforeRouteEnter(to: Route, from: Route, next: NavigationGuardNext) {
+    if (api.state.loggedIn) {
+      next('/')
+    } else {
+      next()
+    }
+  }
+})
 export default class Login extends Vue {
   loading = false
   username = ''
   password = ''
-
-  beforeCreate() {
-    if (api.state.loggedIn) {
-      this.$router.push('/')
-    }
-  }
 
   async submit() {
     this.loading = true

@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import { evUserChanged } from './events'
 import { UserAPI } from './user'
 
 const kAccessToken = 'access-token'
@@ -56,5 +57,11 @@ export class APIHub {
     this.token = token
     this.userId = userId
     this.state.loggedIn = true
+  }
+
+  logout(){
+    this.token = ''
+    this.userId = ''
+    this.state.loggedIn = false
   }
 }

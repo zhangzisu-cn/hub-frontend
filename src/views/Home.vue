@@ -43,8 +43,18 @@ import UserBasic from '@/components/UserBasic.vue'
 import UserPassword from '@/components/UserPassword.vue'
 import UserToken from '@/components/UserToken.vue'
 import UserMeta from '@/components/UserMeta.vue'
+import { NavigationGuardNext, Route } from 'vue-router'
 
-@Component({ components: { UserBasic, UserPassword, UserToken, UserMeta } })
+@Component({
+  components: { UserBasic, UserPassword, UserToken, UserMeta },
+  beforeRouteEnter(to: Route, from: Route, next: NavigationGuardNext) {
+    if (!api.state.loggedIn) {
+      next('/login')
+    } else {
+      next()
+    }
+  }
+})
 export default class Home extends Vue {
   tab = 0
   loading = false
@@ -52,12 +62,6 @@ export default class Home extends Vue {
   nickname = ''
   email = ''
   password = ''
-
-  beforeCreate() {
-    if (!api.state.loggedIn) {
-      this.$router.push('/login')
-    }
-  }
 
   async created() {
     this.loading = true
