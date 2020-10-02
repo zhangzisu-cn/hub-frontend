@@ -14,5 +14,6 @@ module.exports = {
         BUILD_DATE: JSON.stringify(new Date().toLocaleString())
       })
     ]
-  }
+  },
+  transpileDependencies: ['vuetify']
 }
