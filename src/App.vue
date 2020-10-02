@@ -6,7 +6,7 @@
           <v-img src="@/assets/logo.svg" />
         </v-avatar>
       </v-btn>
-      <v-btn text x-large class="pa-0 text-left">
+      <v-btn text x-large class="pa-0 text-center" to="/">
         <div class="ma-2">
           <div class="font-weight-bold">ZhangZisu.CN</div>
           <div class="text-overline" style="line-height: unset;">
@@ -14,6 +14,11 @@
           </div>
         </div>
       </v-btn>
+      <v-btn x-large text to="/about">
+        About
+      </v-btn>
+      <v-spacer />
+      <user-indicator />
     </v-app-bar>
     <v-main>
       <v-container fluid>
@@ -50,7 +55,9 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-@Component
+import UserIndicator from '@/components/UserIndicator.vue'
+
+@Component({ components: { UserIndicator } })
 export default class App extends Vue {
   build = {
     hash: GIT_HASH,
