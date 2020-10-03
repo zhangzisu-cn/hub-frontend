@@ -40,7 +40,7 @@
         <v-col cols="auto">
           <v-tooltip top>
             <template v-slot:activator="{ on }">
-              <v-btn text href="https://github.com/zhangzisu-cn/proxy" target="_blank" v-on="on">
+              <v-btn text :href="'https://github.com/zhangzisu-cn/hub-frontend/commit/' + build.hash" target="_blank" v-on="on">
                 <v-icon left>mdi-git</v-icon>
                 {{ build.hash.substr(0, 7) }}
               </v-btn>
