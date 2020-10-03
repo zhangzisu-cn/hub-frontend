@@ -35,14 +35,13 @@ export default class UserIndicatorInfo extends Vue {
 
   async load() {
     this.loading = true
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const user = await api.user.getOneOrFail(api.userId!)
     this.nickname = user.nickname
     this.loading = false
   }
 
-  logout() {
-    api.logout()
+  async logout() {
+    await api.logout()
     this.$router.push('/login')
   }
 }

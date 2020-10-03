@@ -1,7 +1,7 @@
 <template>
   <v-card flat>
     <v-card-text>
-      <v-text-field label="New password" v-model="password" />
+      <v-text-field label="New password" type="password" v-model="password" />
     </v-card-text>
     <v-card-actions>
       <v-spacer />
@@ -23,7 +23,6 @@ export default class UserPassword extends Vue {
 
   async update() {
     this._loading = true
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     await api.user.update(api.userId!, undefined, undefined, undefined, this.password)
     this._loading = false
   }

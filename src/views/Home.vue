@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row justify="center">
-      <v-col lg="6" xl="4">
+      <v-col lg="10" xl="6">
         <v-card :loading="loading">
           <v-tabs v-model="tab">
             <v-tabs-slider></v-tabs-slider>
@@ -15,19 +15,19 @@
               Password
             </v-tab>
             <v-tab-item key="passwd">
-              <user-password />
+              <user-password :loading.sync="loading" />
             </v-tab-item>
             <v-tab key="token">
               Tokens
             </v-tab>
             <v-tab-item key="token">
-              <user-token />
+              <user-token :loading.sync="loading" />
             </v-tab-item>
             <v-tab key="meta">
               Meta
             </v-tab>
             <v-tab-item key="meta">
-              <user-meta />
+              <user-meta :loading.sync="loading" />
             </v-tab-item>
           </v-tabs>
         </v-card>
@@ -58,20 +58,5 @@ import { NavigationGuardNext, Route } from 'vue-router'
 export default class Home extends Vue {
   tab = 0
   loading = false
-  username = ''
-  nickname = ''
-  email = ''
-  password = ''
-
-  async created() {
-    this.loading = true
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const user = await api.user.getOneOrFail(api.userId!)
-    this.username = user.username
-    this.nickname = user.nickname
-    this.email = user.email
-    this.password = user.password
-    this.loading = false
-  }
 }
 </script>

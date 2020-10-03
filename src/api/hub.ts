@@ -1,8 +1,9 @@
 import Vue from 'vue'
-import { evUserChanged } from './events'
+import { MetaAPI } from './meta'
 import { UserAPI } from './user'
 
 const kAccessToken = 'access-token'
+const kTokenId = 'token-id'
 const kUserId = 'user-id'
 
 export class APIHub {
@@ -13,10 +14,12 @@ export class APIHub {
   })
 
   user: UserAPI
+  meta: MetaAPI
 
   constructor() {
     this.state.loggedIn = !!this.token
     this.user = new UserAPI(this)
+    this.meta = new MetaAPI(this)
   }
 
   private get token() {
@@ -25,6 +28,14 @@ export class APIHub {
 
   private set token(val) {
     val ? localStorage.setItem(kAccessToken, val) : localStorage.removeItem(kAccessToken)
+  }
+
+  private get tokenId() {
+    return localStorage.getItem(kTokenId)
+  }
+
+  private set tokenId(val) {
+    val ? localStorage.setItem(kTokenId, val) : localStorage.removeItem(kTokenId)
   }
 
   get userId() {
@@ -53,15 +64,18 @@ export class APIHub {
   }
 
   async login(username: string, pass: string) {
-    const [userId, tokenId, token] = await this.invoke('/misc/login', { username, pass, description: 'Hub' })
+    const [userId, tokenId, token] = await this.invoke('/misc/login', { username, pass, desc: 'Hub' })
     this.token = token
     this.userId = userId
+    this.tokenId = tokenId
     this.state.loggedIn = true
   }
 
-  logout(){
+  async logout() {
+    await this.user.removeToken(this.tokenId!).catch(e => console.log(e))
     this.token = ''
     this.userId = ''
+    this.tokenId = ''
     this.state.loggedIn = false
   }
 }

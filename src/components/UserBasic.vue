@@ -32,7 +32,6 @@ export default class UserBasic extends Vue {
 
   async update() {
     this._loading = true
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     await api.user.update(api.userId!, this.username, this.nickname, this.email)
     api.state.$emit(evUserChanged)
     this._loading = false
@@ -40,7 +39,6 @@ export default class UserBasic extends Vue {
 
   async reset() {
     this._loading = true
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const user = await api.user.getOneOrFail(api.userId!)
     this.username = user.username
     this.nickname = user.nickname
