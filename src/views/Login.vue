@@ -28,7 +28,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
 import { api } from '@/api'
 import { NavigationGuardNext, Route } from 'vue-router'
 
@@ -42,6 +42,9 @@ import { NavigationGuardNext, Route } from 'vue-router'
   }
 })
 export default class Login extends Vue {
+  @Prop()
+  embed!: boolean
+
   loading = false
   username = ''
   password = ''
@@ -50,6 +53,9 @@ export default class Login extends Vue {
     this.loading = true
     try {
       await api.login(this.username, this.password)
+      if (this.embed) {
+        window.close()
+      }
       this.$router.push('/')
     } catch (e) {
       console.log(e)

@@ -20,7 +20,8 @@ const routes: Array<RouteConfig> = [
   {
     path: '/login',
     name: 'Login',
-    component: Login
+    component: Login,
+    props: route => route.query
   }
 ]
 

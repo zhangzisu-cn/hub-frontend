@@ -16,10 +16,29 @@ export class APIHub {
   user: UserAPI
   meta: MetaAPI
 
+  private _restateTimeout?: number
+
   constructor() {
-    this.state.loggedIn = !!this.token
+    this.reloadState()
     this.user = new UserAPI(this)
     this.meta = new MetaAPI(this)
+    window.addEventListener('storage', () => {
+      this.lazyReloadState()
+    })
+  }
+
+  private lazyReloadState() {
+    if (this._restateTimeout) {
+      clearTimeout(this._restateTimeout)
+    }
+    this._restateTimeout = setTimeout(() => {
+      this.reloadState()
+      this._restateTimeout = undefined
+    }, 200)
+  }
+
+  private reloadState() {
+    this.state.loggedIn = !!this.token
   }
 
   get token() {
