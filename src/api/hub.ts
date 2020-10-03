@@ -22,19 +22,19 @@ export class APIHub {
     this.meta = new MetaAPI(this)
   }
 
-  private get token() {
+  get token() {
     return localStorage.getItem(kAccessToken)
   }
 
-  private set token(val) {
+  set token(val) {
     val ? localStorage.setItem(kAccessToken, val) : localStorage.removeItem(kAccessToken)
   }
 
-  private get tokenId() {
+  get tokenId() {
     return localStorage.getItem(kTokenId)
   }
 
-  private set tokenId(val) {
+  set tokenId(val) {
     val ? localStorage.setItem(kTokenId, val) : localStorage.removeItem(kTokenId)
   }
 

@@ -11,7 +11,7 @@
           <v-spacer />
           <v-icon v-if="meta.schema.global">mdi-earth</v-icon>
           <v-icon v-else>mdi-account</v-icon>
-          <v-icon v-if="internal">mdi-lock-outline</v-icon>
+          <v-icon v-if="_protected">mdi-lock-outline</v-icon>
         </v-card-title>
         <v-card-text>
           {{ meta.schema.desc }}
@@ -20,13 +20,13 @@
       <v-tab key="edit">Edit</v-tab>
       <v-tab-item key="edit">
         <v-card-text>
-          <v-textarea label="Value" v-model="value" :disabled="internal" />
+          <v-textarea label="Value" v-model="value" :disabled="_protected" />
         </v-card-text>
         <v-card-actions>
-          <v-btn color="error" @click="remove" :disabled="loading || internal">Delete</v-btn>
+          <v-btn color="error" @click="remove" :disabled="loading || _protected">Delete</v-btn>
           <v-spacer />
-          <v-btn color="warning" @click="reset" :disabled="loading || internal">Reset</v-btn>
-          <v-btn color="primary" @click="update" :disabled="loading || internal">Update</v-btn>
+          <v-btn color="warning" @click="reset" :disabled="loading || _protected">Reset</v-btn>
+          <v-btn color="primary" @click="update" :disabled="loading || _protected">Update</v-btn>
         </v-card-actions>
       </v-tab-item>
     </v-tabs>
@@ -56,7 +56,7 @@ export default class MetaDetails extends Vue {
     this.value = this.meta.value
   }
 
-  get internal() {
+  get _protected() {
     return systemList.includes(this.meta.schema.name)
   }
 
