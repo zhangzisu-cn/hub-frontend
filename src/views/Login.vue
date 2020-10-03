@@ -54,6 +54,7 @@ export default class Login extends Vue {
     try {
       await api.login(this.username, this.password)
       if (this.embed) {
+        window.opener.postMessage('done', '*')
         window.close()
       }
       this.$router.push('/')
